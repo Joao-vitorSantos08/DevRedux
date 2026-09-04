@@ -1,9 +1,11 @@
 import styles from './home.module.css'
 import { Header } from '../../components/header'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 
 export function Home() {
-
+  
   function handleDeleteAddress(){
     alert("Endereço deletado com sucesso!")
   }
