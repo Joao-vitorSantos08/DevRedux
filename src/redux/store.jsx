@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./root-reduce"
-import creteSagaMiddleware from "redux-saga"
+import rootReducer from "./root-reduce";
+import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 
-const sagaMIddleware = creteSagaMiddleware()
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: [sagaMIddleware]
-})
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+});
 
-sagaMIddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);

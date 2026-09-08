@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: null,
-    users: []
+    users: [],
+    loading: false,
 }
 
 export const userSlice = createSlice({
@@ -62,10 +63,31 @@ export const userSlice = createSlice({
             }
         },
         fetchUsers: (state) => {
-            console.log("Chamou o fetch")
+            state.loading = true
+
+        },
+        fetchUsersSucess: (state, action) => {
+            state.users = action.payload;
+            state.loading = false;
+        },
+        fetchUsersFailure: (state, action) => {
+            console.log(action.payload)
+            state.loading = false;
+        },
+        fetchUsersById: () => {
+            console.log("Chamou no slice")
+        },
+        fetchUsersByIdSucces: (state, action) => {
+            console.log("User do id")
+            console.log(action.payload)
+        },
+        fetchUsersByIdFailure: (state) => {
+            console.log("Deu erro no fetch")
         }
     }
 })
 
-export const { createUser, logoutUser, addAddress, deleteAddress, fetchUsers} = userSlice.actions;
+export const { createUser, logoutUser, addAddress, deleteAddress, fetchUsers,
+    fetchUsersSucess, fetchUsersFailure, fetchUsersById, fetchUsersByIdFailure, fetchUsersByIdSucces
+} = userSlice.actions;
 export default userSlice.reducer;
