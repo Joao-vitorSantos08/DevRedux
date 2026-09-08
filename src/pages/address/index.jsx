@@ -3,20 +3,27 @@ import styles from './address.module.css'
 import { Header } from '../../components/header'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { addAddress } from "../../redux/user/slice"
+import { addAddress, deleteAddress } from "../../redux/user/slice"
 
 export function Address() {
   const { user } = useSelector((rootReducer) => rootReducer.user)
   const dispatch = useDispatch()
 
   const [addressName, setAddressName] = useState(user?.address?.location ?? "")
-  const [addressNumber, setAddressNumber] = useState(user?.address.number ?? "")
+  const [addressNumber, setAddressNumber] = useState(user?.address?.number ?? "")
 
   function handleRegisterAddress() {
     dispatch(addAddress({
       location: addressName,
       number: addressNumber
     }))
+  }
+
+  const handleDeleteAddress = () => {
+    dispatch(deleteAddress())
+    setAddressName("")
+    setAddressNumber("")
+    alert("Deletado ")
   }
 
   return (
@@ -29,6 +36,9 @@ export function Address() {
             <Link to="/painel">
               Voltar para o painel
             </Link>
+            {user && user?.address && (
+              <button className={styles.buttondelete} onClick={handleDeleteAddress}>Deleta Endereço</button>
+            )}
           </div>
 
           <section className={styles.address}>
